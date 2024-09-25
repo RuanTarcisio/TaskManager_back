@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.rtarcisio.todo_back.domains.Todo;
 import com.rtarcisio.todo_back.dtos.TodoDto;
+import com.rtarcisio.todo_back.resources.TodoRepository;
 
 /**
  *
@@ -18,6 +19,14 @@ import com.rtarcisio.todo_back.dtos.TodoDto;
  @Service
 public class TodoService {
 
+    private final TodoRepository repository;
+
+    public TodoService(TodoRepository repository) {
+        this.repository = repository;
+    }
+
+
+
     public Todo saveTodo(TodoDto dto) {
        
         
@@ -25,7 +34,11 @@ public class TodoService {
     }
 
     public TodoDto findById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        var todo = repository.findById(id);
+        return null;
+
     }
+
+    
 
 }

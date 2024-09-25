@@ -11,13 +11,8 @@ import java.util.List;
 
 import com.rtarcisio.todo_back.state.TodoState;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.rtarcisio.todo_back.strategy.TodoStateStrategyInterface;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,9 +38,7 @@ public class Todo {
     @Enumerated(EnumType.STRING)
     private TodoState todoState;
     
-    private LocalDateTime toStart;
-
-    private LocalDateTime toEnd;
+    private LocalDateTime started;
 
     private LocalDateTime finalized;
 
@@ -54,8 +47,6 @@ public class Todo {
     @ElementCollection(targetClass = TodoTagsEnum.class)
     @Enumerated(EnumType.STRING)
     private List<TodoTagsEnum> tags;
-
-
 
     public static enum TodoTagsEnum {
         React("React"), 
