@@ -2,6 +2,7 @@ package com.rtarcisio.todo_back.services;
 
 import com.rtarcisio.todo_back.domains.Todo;
 import com.rtarcisio.todo_back.resources.TodoRepository;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
@@ -13,11 +14,15 @@ import java.util.List;
 
 @Service
 public class TodoAuditService {
-    @Autowired
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
+
+    private final TodoRepository repository;
 
     @Autowired
-    private TodoRepository repository;
+    public TodoAuditService(EntityManager entity, TodoRepository repository){
+        this.repository = repository;
+        this.entityManager = entity;
+    }
 
 
     public List<Todo> getAuditHistory(Long todoId) {
@@ -33,4 +38,5 @@ public class TodoAuditService {
 
         return auditHistory;
     }
+
 }

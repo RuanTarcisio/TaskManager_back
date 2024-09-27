@@ -8,7 +8,9 @@ package com.rtarcisio.todo_back.services;
 import com.rtarcisio.todo_back.domains.Todo;
 import com.rtarcisio.todo_back.dtos.TodoDto;
 import com.rtarcisio.todo_back.dtos.TodoUpdateDto;
+import com.rtarcisio.todo_back.enums.TodoTagsEnum;
 import com.rtarcisio.todo_back.resources.TodoRepository;
+import com.rtarcisio.todo_back.state.TodoState;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,8 +67,9 @@ public class TodoService {
                 .description(dto.getDescription())
                 .previsionToEnd(dto.getPrevisionToEnd())
                 .started(LocalDateTime.now())
+                .todoState(TodoState.NEW)
                 .tags(dto.getTags().stream()
-                        .map(tag -> Todo.TodoTagsEnum.valueOf(tag))
+                        .map(tag -> TodoTagsEnum.valueOf(tag.toUpperCase()))
 //                        .map(Todo.TodoTagsEnum::valueOf)
                         .collect(Collectors.toList()))
                 .build();
@@ -86,7 +89,7 @@ public class TodoService {
                 .started(todo.getStarted())
                 .finalized(todo.getFinalized())
                 .tags(todo.getTags().stream()
-                        .map(todoTagsEnum -> todoTagsEnum.name())
+                        .map(todoTagsEnum -> todoTagsEnum.name().toUpperCase())
 //                      .map(todoTagsEnum -> todoTagsEnum.name()) // Usa name() para obter a representação em String
                         .collect(Collectors.toList()))
                 .build();

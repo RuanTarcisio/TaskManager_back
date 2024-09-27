@@ -19,12 +19,12 @@ public enum TodoState implements StateInterface {
     CLOSED {
         @Override
         public void reOpen(Todo todo) {
-            throw new UnsupportedOperationException("Cannot start a canceled todo.");
+            todo.setTodoState(REOPENED);
         }
 
         @Override
         public void complete(Todo todo) {
-            throw new UnsupportedOperationException("Cannot complete a canceled todo.");
+            todo.setTodoState(COMPLETED);
         }
 
         @Override
@@ -83,8 +83,7 @@ public enum TodoState implements StateInterface {
     NEW {
         @Override
         public void reOpen(Todo todo) {
-            todo.setTodoState(IN_PROGRESS);
-            todo.setStarted(LocalDateTime.now());
+            throw new UnsupportedOperationException("Unsuported");
         }
 
         @Override
@@ -101,6 +100,31 @@ public enum TodoState implements StateInterface {
         public void edit(Todo todo, TodoUpdateDto dto) {
 
         }
+
+
+    },
+    REOPENED {
+        @Override
+        public void reOpen(Todo todo) {
+            throw new UnsupportedOperationException("Unsuported");
+        }
+
+        @Override
+        public void complete(Todo todo) {
+            throw new UnsupportedOperationException("Cannot complete a new todo.");
+        }
+
+        @Override
+        public void close(Todo todo) {
+            todo.setTodoState(CLOSED);
+        }
+
+        @Override
+        public void edit(Todo todo, TodoUpdateDto dto) {
+
+        }
+
+
     };
 //
 //    // Métodos abstratos para cada operação

@@ -7,7 +7,9 @@ package com.rtarcisio.todo_back.controller;
 import java.net.URI;
 
 import com.rtarcisio.todo_back.dtos.TodoUpdateDto;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -23,6 +25,7 @@ import com.rtarcisio.todo_back.services.TodoService;
  */
 @RequestMapping("/todo")
 @RestController
+@Validated
 public class TodoController {
 
     private final TodoService todoService;
@@ -38,7 +41,7 @@ public class TodoController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<TodoDto> createTodo(@RequestBody TodoDto dto) {
+    public ResponseEntity<TodoDto> createTodo(@Valid @RequestBody TodoDto dto) {
         
         TodoDto todo = todoService.createTodo(dto);
 
@@ -48,7 +51,7 @@ public class TodoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> editTodo(@RequestBody TodoUpdateDto objDto, @RequestParam Long id){
+    public ResponseEntity<Void> editTodo(@RequestBody TodoUpdateDto objDto, @PathVariable Long id){
         todoService.editTodo(id, objDto);
         return ResponseEntity.accepted().build();
     }

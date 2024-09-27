@@ -6,7 +6,9 @@
 package com.rtarcisio.todo_back.domains;
 
 import com.rtarcisio.todo_back.dtos.TodoUpdateDto;
+import com.rtarcisio.todo_back.enums.TodoTagsEnum;
 import com.rtarcisio.todo_back.state.TodoState;
+import com.rtarcisio.todo_back.utils.TodoTagsConverter;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -27,30 +29,35 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-@Audited
 public class Todo {
 
+    @Audited
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_todo;
 
+    @Audited
     private String title;
 
+    @Audited
     private String description;
 
+    @Audited
     @Enumerated(EnumType.STRING)
     private TodoState todoState = TodoState.NEW;
 
     private LocalDateTime started;
 
+    @Audited
     private LocalDateTime finalized;
 
+    @Audited
     private LocalDateTime modificationDate;
 
     private LocalDate previsionToEnd;
 
-    @ElementCollection(targetClass = TodoTagsEnum.class)
-    @Enumerated(EnumType.STRING)
+    @Audited
+    @Convert(converter = TodoTagsConverter.class) // Aplica o conversor
     private List<TodoTagsEnum> tags;
 
     public void reOpen() {
@@ -69,25 +76,5 @@ public class Todo {
         this.todoState.edit(this, dto);
     }
 
-    public enum TodoTagsEnum {
-        React("React"),
-        HTML("HTML"),
-        CSS("CSS"),
-        Docker("Docker"),
-        Spring("Spring"),
-        JavaScript("JavaScript"),
-        Others("Others");
-
-        private final String tag;
-
-        TodoTagsEnum(String tag) {
-            this.tag = tag;
-        }
-
-        String getTag() {
-            return tag;
-        }
-
-    }
 
 }
