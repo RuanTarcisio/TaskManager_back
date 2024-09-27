@@ -6,13 +6,9 @@ package com.rtarcisio.todo_back.controller;
 
 import java.net.URI;
 
+import com.rtarcisio.todo_back.dtos.TodoUpdateDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.rtarcisio.todo_back.domains.Todo;
@@ -44,18 +40,25 @@ public class TodoController {
     @PostMapping("/create")
     public ResponseEntity<TodoDto> createTodo(@RequestBody TodoDto dto) {
         
-        Todo todo = todoService.saveTodo(dto);
+        TodoDto todo = todoService.createTodo(dto);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(todo.getId_todo())
                 .toUri();
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping("/{id}")
-    public String findById(@RequestParam Long id) {
-        TodoDto todo = todoService.findById(id);
-        return new String();
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> editTodo(@RequestBody TodoUpdateDto objDto, @RequestParam Long id){
+        todoService.editTodo(id, objDto);
+        return ResponseEntity.accepted().build();
     }
+
+
+//    @GetMapping("/{id}")
+//    public String findById(@RequestParam Long id) {
+//        TodoDto todo = todoService.findById(id);
+//        return new String();
+//    }
     
 
 }

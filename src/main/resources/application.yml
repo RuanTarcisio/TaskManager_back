@@ -11,4 +11,6 @@ spring:
     show-sql: true
     open-in-view: true
     properties:
+      hibernate:
+        "globally_quoted_identifiers": "true"
       hibernate.format_sql: true

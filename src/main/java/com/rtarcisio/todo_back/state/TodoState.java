@@ -6,6 +6,7 @@
 package com.rtarcisio.todo_back.state;
 
 import com.rtarcisio.todo_back.domains.Todo;
+import com.rtarcisio.todo_back.dtos.TodoUpdateDto;
 
 import java.time.LocalDateTime;
 
@@ -13,28 +14,53 @@ import java.time.LocalDateTime;
  *
  * @author ruantarcisio
  */
-public enum TodoState{
+public enum TodoState implements StateInterface {
 
-    NEW {
+    CLOSED {
         @Override
-        public void start(Todo todo) {
-            todo.setTodoState(IN_PROGRESS);
-            todo.setStarted(LocalDateTime.now());
+        public void reOpen(Todo todo) {
+            throw new UnsupportedOperationException("Cannot start a canceled todo.");
         }
 
         @Override
         public void complete(Todo todo) {
-            throw new UnsupportedOperationException("Cannot complete a new todo.");
+            throw new UnsupportedOperationException("Cannot complete a canceled todo.");
         }
 
         @Override
-        public void cancel(Todo todo) {
-            todo.setTodoState(CANCELED);
+        public void close(Todo todo) {
+            throw new UnsupportedOperationException("Todo is already canceled.");
+        }
+
+        @Override
+        public void edit(Todo todo, TodoUpdateDto dto) {
+            throw new UnsupportedOperationException("Todo is already canceled.");
+        }
+    },
+    COMPLETED {
+        @Override
+        public void reOpen(Todo todo) {
+            throw new UnsupportedOperationException("Cannot start a completed todo.");
+        }
+
+        @Override
+        public void complete(Todo todo) {
+            throw new UnsupportedOperationException("Todo is already completed.");
+        }
+
+        @Override
+        public void close(Todo todo) {
+            throw new UnsupportedOperationException("Cannot cancel a completed todo.");
+        }
+
+        @Override
+        public void edit(Todo todo, TodoUpdateDto dto) {
+
         }
     },
     IN_PROGRESS {
         @Override
-        public void start(Todo todo) {
+        public void reOpen(Todo todo) {
             throw new UnsupportedOperationException("Todo is already in progress.");
         }
 
@@ -45,45 +71,42 @@ public enum TodoState{
         }
 
         @Override
-        public void cancel(Todo todo) {
-            todo.setTodoState(CANCELED);
+        public void close(Todo todo) {
+            todo.setTodoState(CLOSED);
+        }
+
+        @Override
+        public void edit(Todo todo, TodoUpdateDto dto) {
+
         }
     },
-    COMPLETED {
+    NEW {
         @Override
-        public void start(Todo todo) {
-            throw new UnsupportedOperationException("Cannot start a completed todo.");
+        public void reOpen(Todo todo) {
+            todo.setTodoState(IN_PROGRESS);
+            todo.setStarted(LocalDateTime.now());
         }
 
         @Override
         public void complete(Todo todo) {
-            throw new UnsupportedOperationException("Todo is already completed.");
+            throw new UnsupportedOperationException("Cannot complete a new todo.");
         }
 
         @Override
-        public void cancel(Todo todo) {
-            throw new UnsupportedOperationException("Cannot cancel a completed todo.");
-        }
-    },
-    CANCELED {
-        @Override
-        public void start(Todo todo) {
-            throw new UnsupportedOperationException("Cannot start a canceled todo.");
+        public void close(Todo todo) {
+            todo.setTodoState(CLOSED);
         }
 
         @Override
-        public void complete(Todo todo) {
-            throw new UnsupportedOperationException("Cannot complete a canceled todo.");
-        }
+        public void edit(Todo todo, TodoUpdateDto dto) {
 
-        @Override
-        public void cancel(Todo todo) {
-            throw new UnsupportedOperationException("Todo is already canceled.");
         }
     };
-
-    // Métodos abstratos para cada operação
-    public abstract void start(Todo todo);
-    public abstract void complete(Todo todo);
-    public abstract void cancel(Todo todo);
+//
+//    // Métodos abstratos para cada operação
+//    public abstract void start(Todo todo);
+//
+//    public abstract void complete(Todo todo);
+//
+//    public abstract void cancel(Todo todo);
 }
