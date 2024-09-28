@@ -1,4 +1,4 @@
-package com.rtarcisio.todo_back.resources;
+package com.rtarcisio.todo_back.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

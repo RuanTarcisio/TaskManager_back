@@ -9,12 +9,11 @@ import com.rtarcisio.todo_back.domains.Todo;
 import com.rtarcisio.todo_back.dtos.TodoDto;
 import com.rtarcisio.todo_back.dtos.TodoUpdateDto;
 import com.rtarcisio.todo_back.enums.TodoTagsEnum;
-import com.rtarcisio.todo_back.resources.TodoRepository;
+import com.rtarcisio.todo_back.repositories.TodoRepository;
 import com.rtarcisio.todo_back.state.TodoState;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
@@ -55,8 +54,21 @@ public class TodoService {
     public void editTodo(Long id, TodoUpdateDto dto){
         Todo todo = findById(id);
         todo.edit(dto);
+    }
 
+    public void closeTodo(Long id) {
+        Todo todo = findById(id);
+        todo.complete();
+    }
 
+    public void reOpenTodo(Long id) {
+        Todo todo = findById(id);
+        todo.reOpen();
+    }
+
+    public void cancelTodo(Long id) {
+        Todo todo = findById(id);
+        todo.cancel();
     }
 
     private Todo toModel(TodoDto dto){

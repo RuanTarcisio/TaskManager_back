@@ -1,4 +1,5 @@
-#TaskManager API - Gerenciamento de Tarefas (Todos)
+# TaskManager API - Gerenciamento de Tarefas (Todo) 
+#### -- EM DESENVOLVIMENTO / ON DEVELOPMENT--
 
 TaskManager é uma API RESTful projetada para gerenciar tarefas (Todos), com funcionalidades de criação, atualização, exclusão e consulta de tarefas, além de suporte a auditoria e uso do padrão State para gerenciar o ciclo de vida de cada tarefa.
 
@@ -8,6 +9,7 @@ TaskManager é uma API RESTful projetada para gerenciar tarefas (Todos), com fun
 	<img align="center" alt="java" src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" />
 	<img align="center" alt="spring" src="https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white" />
 	<img align="center" alt="postgresql" src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=black" />
+	<img align="center" alt="hibernate" src="https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=black" />
 </div>
 
 <br/>
@@ -35,9 +37,9 @@ Ciclo de Vida do Todo:
 Tecnologias Utilizadas
 Java 17+
 Spring Boot 3.3.3
-Hibernate 6.6.1 com Envers
+Hibernate 6.6.1.Final com Envers
 Maven para gerenciamento de dependências
-Postgres
+PostgreSQL
 Como Rodar o Projeto
 Clone o repositório:
 
@@ -60,7 +62,8 @@ Acesse http://localhost:8080/swagger-ui.html para testar os endpoints.
 Licença
 Este projeto está licenciado sob os termos da licença MIT.
 
-###_________________________________________________________________________________________________________________________________________________________
+### __________________________________________________________________________________________
+
 
 TaskManager API - Todo Management
 TaskManager is a RESTful API designed to manage Todos (tasks), providing functionalities to create, update, delete, and query tasks, along with auditing features and the use of the State design pattern to handle the task's lifecycle.
@@ -71,12 +74,9 @@ Update Todos: Modify details such as title, description, and due date of an exis
 List Todos: Display all tasks or filter by the authenticated user.
 State Transitions: Uses the State pattern to switch between PENDING, IN_PROGRESS, and COMPLETED task states.
 Auditing: Tracks and records changes made to task data, identifying who made the modifications and when.
-Endpoints
-GET /api/todos: Lists all tasks or filters by the authenticated user.
-POST /api/todos: Creates a new task.
-PUT /api/todos/{id}: Updates an existing task.
-DELETE /api/todos/{id}: Deletes a task.
-PATCH /api/todos/{id}/state: Updates the state of a task (PENDING, IN_PROGRESS, COMPLETED).
+
+** Endpoints
+
 Auditing with Hibernate Envers
 The API implements auditing with Hibernate Envers to track all modifications made to Todo entities. This enables monitoring of who made the changes and which fields were modified. A separate audit table (Todo_AUD) is created to store this information, ensuring data traceability.
 
@@ -92,11 +92,11 @@ PENDING: When the task is created.
 IN_PROGRESS: When the task is being worked on.
 COMPLETED: When the task is completed.
 Technologies Used
-Java 11+
+Java 17+
 Spring Boot 3.3.3
-Hibernate 3.3.3 with Envers
+Hibernate 6.6.1.Final with Envers
 Maven for dependency management
-H2 Database (can be configured for any JPA-compatible database)
+PostgreSQL
 How to Run the Project
 Clone the repository:
 
@@ -118,4 +118,5 @@ Access the interactive documentation:
 Go to http://localhost:8080/swagger-ui.html to test the API endpoints.
 License
 This project is licensed under the terms of the MIT License.
+
 

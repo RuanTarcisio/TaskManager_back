@@ -21,7 +21,10 @@ public class TodoUpdateDto {
     @NotNull
     private String description;
 
+    @NotNull
     private List<String> tags;
+
+    private boolean isFinalized;
 
     private LocalDate previsionToEnd;
 }

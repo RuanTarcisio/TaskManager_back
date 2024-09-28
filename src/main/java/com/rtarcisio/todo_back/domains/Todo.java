@@ -16,6 +16,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,9 +31,9 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class Todo {
 
-    @Audited
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_todo;
@@ -52,8 +54,11 @@ public class Todo {
     private LocalDateTime finalized;
 
     @Audited
-    private LocalDateTime modificationDate;
+    @LastModifiedDate
+    @Column(name = "modified_at")
+    private LocalDateTime modifiedAt;
 
+    @Audited
     private LocalDate previsionToEnd;
 
     @Audited
@@ -69,7 +74,7 @@ public class Todo {
     }
 
     public void cancel() {
-        this.todoState.close(this);
+        this.todoState.cancel(this);
     }
 
     public void edit(TodoUpdateDto dto) {

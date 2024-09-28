@@ -1,8 +1,7 @@
 package com.rtarcisio.todo_back.services;
 
 import com.rtarcisio.todo_back.domains.Todo;
-import com.rtarcisio.todo_back.resources.TodoRepository;
-import jakarta.persistence.Entity;
+import com.rtarcisio.todo_back.repositories.TodoRepository;
 import jakarta.persistence.EntityManager;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;

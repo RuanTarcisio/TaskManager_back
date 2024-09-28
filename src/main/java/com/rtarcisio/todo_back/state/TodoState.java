@@ -7,34 +7,59 @@ package com.rtarcisio.todo_back.state;
 
 import com.rtarcisio.todo_back.domains.Todo;
 import com.rtarcisio.todo_back.dtos.TodoUpdateDto;
+import com.rtarcisio.todo_back.enums.TodoTagsEnum;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 /**
- *
+ *PENDING, IN_PROGRESS, COMPLETED
  * @author ruantarcisio
  */
 public enum TodoState implements StateInterface {
 
-    CLOSED {
+    NEW {
         @Override
         public void reOpen(Todo todo) {
-            todo.setTodoState(REOPENED);
+            throw new UnsupportedOperationException("Todo is already opened.");
         }
 
         @Override
         public void complete(Todo todo) {
             todo.setTodoState(COMPLETED);
+            todo.setFinalized(LocalDateTime.now());
         }
 
         @Override
-        public void close(Todo todo) {
-            throw new UnsupportedOperationException("Todo is already canceled.");
+        public void cancel(Todo todo) {
+            todo.setTodoState(CANCELED);
         }
 
         @Override
         public void edit(Todo todo, TodoUpdateDto dto) {
-            throw new UnsupportedOperationException("Todo is already canceled.");
+            TodoState.modifyDto(todo, dto);
+            todo.setTodoState(IN_PROGRESS);
+        }
+    },IN_PROGRESS {
+        @Override
+        public void reOpen(Todo todo) {
+            throw new UnsupportedOperationException("Todo is already in progress.");
+        }
+
+        @Override
+        public void complete(Todo todo) {
+            todo.setTodoState(COMPLETED);
+            todo.setFinalized(LocalDateTime.now());
+        }
+
+        @Override
+        public void cancel(Todo todo) {
+            todo.setTodoState(COMPLETED);
+        }
+
+        @Override
+        public void edit(Todo todo, TodoUpdateDto dto) {
+            TodoState.modifyDto(todo, dto);
         }
     },
     COMPLETED {
@@ -49,83 +74,69 @@ public enum TodoState implements StateInterface {
         }
 
         @Override
-        public void close(Todo todo) {
+        public void cancel(Todo todo) {
             throw new UnsupportedOperationException("Cannot cancel a completed todo.");
         }
 
         @Override
         public void edit(Todo todo, TodoUpdateDto dto) {
-
+            throw new UnsupportedOperationException("Cannot edit a completed todo.");
         }
     },
-    IN_PROGRESS {
+    CANCELED {
         @Override
         public void reOpen(Todo todo) {
-            throw new UnsupportedOperationException("Todo is already in progress.");
+            todo.setTodoState(REOPENED);
+        }
+
+        @Override
+        public void complete(Todo todo) {
+            throw new UnsupportedOperationException("Cannot cancel a canceled todo.");
+        }
+
+        @Override
+        public void cancel(Todo todo) {
+            throw new UnsupportedOperationException("Todo is already canceled.");
+
+            //throw new UnsupportedOperationException("Cannot cancel a completed todo.");
+        }
+
+        @Override
+        public void edit(Todo todo, TodoUpdateDto dto) {
+            throw new UnsupportedOperationException("Cannot edit a completed todo.");
+        }
+    },
+    REOPENED {
+        @Override
+        public void reOpen(Todo todo) {
+            throw new UnsupportedOperationException("Todo is already reopened.");
         }
 
         @Override
         public void complete(Todo todo) {
             todo.setTodoState(COMPLETED);
-            todo.setFinalized(LocalDateTime.now());
         }
 
         @Override
-        public void close(Todo todo) {
-            todo.setTodoState(CLOSED);
-        }
-
-        @Override
-        public void edit(Todo todo, TodoUpdateDto dto) {
-
-        }
-    },
-    NEW {
-        @Override
-        public void reOpen(Todo todo) {
-            throw new UnsupportedOperationException("Unsuported");
-        }
-
-        @Override
-        public void complete(Todo todo) {
-            throw new UnsupportedOperationException("Cannot complete a new todo.");
-        }
-
-        @Override
-        public void close(Todo todo) {
-            todo.setTodoState(CLOSED);
+        public void cancel(Todo todo) {
+            todo.setTodoState(CANCELED);
         }
 
         @Override
         public void edit(Todo todo, TodoUpdateDto dto) {
-
+            TodoState.modifyDto(todo, dto);
         }
-
-
-    },
-    REOPENED {
-        @Override
-        public void reOpen(Todo todo) {
-            throw new UnsupportedOperationException("Unsuported");
-        }
-
-        @Override
-        public void complete(Todo todo) {
-            throw new UnsupportedOperationException("Cannot complete a new todo.");
-        }
-
-        @Override
-        public void close(Todo todo) {
-            todo.setTodoState(CLOSED);
-        }
-
-        @Override
-        public void edit(Todo todo, TodoUpdateDto dto) {
-
-        }
-
 
     };
+
+    private static void modifyDto (Todo todo, TodoUpdateDto dto){
+        todo.setDescription(dto.getDescription());
+        todo.setTitle(dto.getTitle());
+        todo.setTags(dto.getTags().stream().map(tag -> TodoTagsEnum.valueOf(tag.toUpperCase()))
+//                        .map(Todo.TodoTagsEnum::valueOf)
+                .collect(Collectors.toList()));
+        todo.setPrevisionToEnd(dto.getPrevisionToEnd());
+    }
 //
 //    // Métodos abstratos para cada operação
 //    public abstract void start(Todo todo);
