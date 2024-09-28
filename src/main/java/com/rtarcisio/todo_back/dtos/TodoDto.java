@@ -30,6 +30,8 @@ public class TodoDto {
 
     private LocalDate previsionToEnd;
 
+    private LocalDateTime modifiedAt;
+
     @NotEmpty
     private List<String> tags;
 

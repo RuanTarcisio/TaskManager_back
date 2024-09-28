@@ -98,6 +98,7 @@ public class TodoService {
                 .state(todo.getTodoState().name())
                 .description(todo.getDescription())
                 .previsionToEnd(todo.getPrevisionToEnd())
+                .modifiedAt(todo.getModifiedAt())
                 .started(todo.getStarted())
                 .finalized(todo.getFinalized())
                 .tags(todo.getTags().stream()

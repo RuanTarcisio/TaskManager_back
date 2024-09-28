@@ -65,6 +65,11 @@ public class Todo {
     @Convert(converter = TodoTagsConverter.class) // Aplica o conversor
     private List<TodoTagsEnum> tags;
 
+    @ManyToOne
+    @JoinColumn(name="person_id", nullable=false)
+
+    private Person person;
+
     public void reOpen() {
         this.todoState.reOpen(this);
     }
