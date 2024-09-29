@@ -1,5 +1,5 @@
-# TaskManager API - Gerenciamento de Tarefas (Todo) 
-#### -- EM DESENVOLVIMENTO / ON DEVELOPMENT--
+# TaskManager API - Gerenciamento de Tarefas (Todo)
+#### -- EM DESENVOLVIMENTO / ON DEVELOPMENT --
 
 TaskManager é uma API RESTful projetada para gerenciar tarefas (Todos), com funcionalidades de criação, atualização, exclusão e consulta de tarefas, além de suporte a auditoria e uso do padrão State para gerenciar o ciclo de vida de cada tarefa.
 
@@ -18,7 +18,7 @@ Funcionalidades Principais
 Criação de Tarefas: Permite adicionar novas tarefas com título, descrição, data de previsão para conclusão e tags.
 Atualização de Tarefas: Modifique detalhes como título, descrição e data de uma tarefa existente.
 Listagem de Tarefas: Exibe todas as tarefas ou apenas as do usuário autenticado.
-Mudança de Estado: Utiliza o padrão State para alternar entre os estados PENDING, IN_PROGRESS, e COMPLETED.
+Mudança de Estado: Utiliza o padrão State para alternar entre os estados NEW, IN_PROGRESS, e COMPLETED, CANCELED e REOPENED.
 Auditoria: Monitora e registra alterações nos dados de tarefas, identificando quem fez as modificações e quando ocorreram.
 Endpoints:
 
@@ -45,12 +45,12 @@ Clone o repositório:
 
 bash
 Copiar código
-git clone https://github.com/seu-usuario/taskmanager-api.git
+git clone https://github.com/RuanTarcisio/TaskManager_back.git
 Navegue até o diretório do projeto:
 
 bash
 Copiar código
-cd taskmanager-api
+cd TaskManager_back
 Execute o projeto:
 
 bash
@@ -62,7 +62,7 @@ Acesse http://localhost:8080/swagger-ui.html para testar os endpoints.
 Licença
 Este projeto está licenciado sob os termos da licença MIT.
 
-### __________________________________________________________________________________________
+### __________________________________________________________________________________
 
 
 TaskManager API - Todo Management
@@ -72,7 +72,7 @@ Main Features
 Create Todos: Add new tasks with title, description, expected completion date, and tags.
 Update Todos: Modify details such as title, description, and due date of an existing task.
 List Todos: Display all tasks or filter by the authenticated user.
-State Transitions: Uses the State pattern to switch between PENDING, IN_PROGRESS, and COMPLETED task states.
+State Transitions: Uses the State pattern to switch between NEW, IN_PROGRESS, and COMPLETED, CANCELED and REOPEND task states.
 Auditing: Tracks and records changes made to task data, identifying who made the modifications and when.
 
 ** Endpoints
@@ -101,17 +101,14 @@ How to Run the Project
 Clone the repository:
 
 bash
-Copiar código
-git clone https://github.com/your-username/taskmanager-api.git
+git clone https://github.com/RuanTarcisio/TaskManager_back.git
 Navigate to the project directory:
 
 bash
-Copiar código
-cd taskmanager-api
+cd TaskManager_back
 Run the project:
 
 bash
-Copiar código
 mvn spring-boot:run
 Access the interactive documentation:
 

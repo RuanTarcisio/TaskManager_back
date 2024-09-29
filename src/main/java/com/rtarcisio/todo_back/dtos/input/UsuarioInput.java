@@ -19,8 +19,8 @@ import java.time.LocalDate;
 @Builder
 public class UsuarioInput {
 
-//	@FileSize(max = "1MB")
-//	@FileContentType(allowed = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE })
+	@FileSize(max = "1MB")
+	@FileContentType(allowed = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE })
 	private MultipartFile arquivo;
 
 	@Email
