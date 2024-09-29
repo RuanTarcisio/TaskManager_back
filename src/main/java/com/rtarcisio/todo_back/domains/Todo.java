@@ -16,6 +16,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -66,8 +67,8 @@ public class Todo {
     private List<TodoTagsEnum> tags;
 
     @ManyToOne
-    @JoinColumn(name="person_id", nullable=false)
-
+    @CreatedBy
+    @JoinColumn(name="person_id")
     private Person person;
 
     public void reOpen() {

@@ -36,6 +36,7 @@ public class Foto {
     private LocalDateTime uploadDate;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte[] file;
 
     @OneToOne

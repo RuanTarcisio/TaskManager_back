@@ -35,7 +35,7 @@ public class Person {
 
     private String cpf;
 
-    private String nomeCompleto;
+    private String name;
 
     private LocalDate dataNascimento;
 
@@ -47,5 +47,4 @@ public class Person {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
-
 }

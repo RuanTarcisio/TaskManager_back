@@ -35,10 +35,10 @@ public class SecurityFilter extends OncePerRequestFilter {
                var login = tokenService.validateToken(token);
 
                Person user = personRepository.findByEmail(login).orElseThrow(() -> new NoSuchElementException("Usuario nao encontrado "));
-               UserDetails userDetails = new CustomUserDetails(user.getId(), user.getEmail(), user.getNomeCompleto(), user.getRole().name());
+               UserDetails userDetails = new CustomUserDetails(user.getId(), user.getEmail(), user.getName(), user.getRole().name(), user.getPasswd());
 
 
-               var authentication = new UsernamePasswordAuthenticationToken(user, null, userDetails.getAuthorities());
+               var authentication = new UsernamePasswordAuthenticationToken(user, user.getPasswd(), userDetails.getAuthorities());
                SecurityContextHolder.getContext().setAuthentication(authentication);
            }catch (Exception e){
                System.out.println("estou aqui");

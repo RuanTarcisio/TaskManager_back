@@ -10,6 +10,7 @@ import com.rtarcisio.todo_back.dtos.TodoDto;
 import com.rtarcisio.todo_back.dtos.TodoUpdateDto;
 import com.rtarcisio.todo_back.enums.TodoTagsEnum;
 import com.rtarcisio.todo_back.repositories.TodoRepository;
+import com.rtarcisio.todo_back.services.exceptions.ObjetoNaoEncontradoException;
 import com.rtarcisio.todo_back.state.TodoState;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +41,7 @@ public class TodoService {
     }
 
     public Todo findById(Long id) {
-      return repository.findById(id).orElseThrow(RuntimeException::new);
+      return repository.findById(id).orElseThrow(() -> new ObjetoNaoEncontradoException("Not found ToDo"));
     }
 
     @Transactional

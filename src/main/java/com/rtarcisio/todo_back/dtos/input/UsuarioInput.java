@@ -19,8 +19,8 @@ import java.time.LocalDate;
 @Builder
 public class UsuarioInput {
 
-	@FileSize(max = "1MB")
-	@FileContentType(allowed = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE })
+//	@FileSize(max = "1MB")
+//	@FileContentType(allowed = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE })
 	private MultipartFile arquivo;
 
 	@Email
@@ -35,9 +35,11 @@ public class UsuarioInput {
 	private String cpf;
 
 	@NotEmpty
-	private String nomeCompleto;
+	private String name;
 
 	@NotNull
 	private LocalDate dataNascimento;
+
+	private Boolean isAdmin;
 	
 }

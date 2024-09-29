@@ -22,11 +22,9 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    public String generateToken(Person user){
+    public String generateToken(CustomUserDetails user){
 
-        UserDetails userDetails = new CustomUserDetails(user.getId(), user.getEmail(), user.getNomeCompleto(), user.getRole().name());
-
-        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+                Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
         List<String> roles = authorities.stream()
                 .map(GrantedAuthority:: getAuthority)
                 .collect(Collectors.toList());
@@ -34,10 +32,10 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
                     .withIssuer("auth-api")
-                    .withSubject(user.getEmail())
+                    .withSubject(user.getLogin())
                     .withExpiresAt(genExpirationDate())
                     .withClaim("roles", roles)
-                    .withClaim("nome", user.getNomeCompleto())
+                    .withClaim("nome", user.getName())
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException exception) {
